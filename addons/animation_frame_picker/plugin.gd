@@ -1,6 +1,15 @@
 tool
 extends EditorPlugin
 
+#-----------------------------------------------#
+# Animation Frame Picker plugin by AniMesuro.	#
+#-----------------------------------------------#
+#
+# GitHub repo:
+# 	https://github.com/AniMesuro/Frame-Picker-for-Godot
+# - Please send bug reports at:
+# 	https://github.com/AniMesuro/Frame-Picker-for-Godot/issues
+
 var group_plugin :String= "plugin animation_frame_picker"
 
 var SCN_FramePicker :PackedScene= load("res://addons/animation_frame_picker/frame picker/FramePicker.tscn")
