@@ -3,7 +3,7 @@ extends EditorPlugin
 
 var group_plugin :String= "plugin animatedsprite_frame_picker"
 
-var SCN_FramePicker :PackedScene= load("res://addons/animatedsprite frame picker/frame picker/FramePicker.tscn")
+var SCN_FramePicker :PackedScene= load("res://addons/animation_frame_picker/frame picker/FramePicker.tscn")
 
 # Editor
 var animationPlayerEditor :Node
