@@ -8,9 +8,9 @@ signal warning_fixed (warning_key)
 
 var pluginInstance :EditorPlugin
 
-var anim_animSprite :AnimatedSprite
+var anim_animSprite :AnimatedSprite setget _set_anim_animSprite
 var anim_spriteFrames :SpriteFrames
-var anim_animation :String
+var anim_animation :String setget _set_anim_animation
 var anim_animPlayer :AnimationPlayer
 var anim :Animation
 
@@ -66,10 +66,10 @@ func _on_frame_selected(frame_id :int):
 #	return
 	
 #	yield(get_tree(), "idle_frame")
-	if !is_inside_tree():
-		print('outside tree')
-	if !is_instance_valid(self):
-		print('self not valid')
+#	if !is_inside_tree():
+#		print('outside tree')
+#	if !is_instance_valid(self):
+#		print('self not valid')
 	
 	if !is_instance_valid(pluginInstance):
 		pluginInstance = _get_pluginInstance()
@@ -96,25 +96,26 @@ func _on_frame_selected(frame_id :int):
 #		return
 		
 #	pluginInstance._get_references()
-	print('animspr ',anim_animSprite)
-	print('_animANIMATIONLIST ==',anim_animPlayer.get_animation_list())
+#	print('animspr ',anim_animSprite)
+#	print('_animANIMATIONLIST ==',anim_animPlayer.get_animation_list())
 	var _anim :String= pluginInstance.animationPlayerEditor_CurrentAnimation_OptionButton.text
-	print('_anim ',_anim)
+#	print('_anim ',_anim)
 	if _anim in anim_animPlayer.get_animation_list():
 		if _anim == '':
 			issue_warning("animplayeredit_empty")
 			return
 		anim = anim_animPlayer.get_animation(_anim)
 	else:
-		print('anim not valid')
+#		print('anim not valid')
 		issue_warning("animplayeredit_empty")
 		return
-	fix_warning("animplayeredit_empty")
 #	anim = anim_animPlayer.get_animation()
-	print("animation is ",anim)
+#	print("animation is ",anim)
 	if !is_instance_valid(anim):
+		issue_warning("animplayeredit_empty")
 		print('animation not selected')
 		return
+	fix_warning("animplayeredit_empty")
 	
 	fix_warning('cant_frame')
 #	var currentAnimation :Animation= pluginInstance.animationPlayerEditor_CurrentAnimation_OptionButton.text
@@ -122,7 +123,7 @@ func _on_frame_selected(frame_id :int):
 	var current_time :float= float(pluginInstance.animationPlayerEditor_CurrentTime_LineEdit.text)
 	
 	var animPlayer_root_node :Node= anim_animPlayer.get_node(anim_animPlayer.root_node)
-	print('animplayer root node =',animPlayer_root_node)
+#	print('animplayer root node =',animPlayer_root_node)
 	var tr_frame :int= anim.find_track(str(animPlayer_root_node.get_path_to(anim_animSprite))+':frame')
 	var tr_anim :int= anim.find_track(str(animPlayer_root_node.get_path_to(anim_animSprite))+':animation')
 	if tr_frame == -1:
@@ -133,10 +134,10 @@ func _on_frame_selected(frame_id :int):
 		tr_anim = anim.add_track(Animation.TYPE_VALUE)
 		anim.track_set_path(tr_anim, str(animPlayer_root_node.get_path_to(anim_animSprite))+':animation')
 		anim.value_track_set_update_mode(tr_anim, Animation.UPDATE_DISCRETE)
-	print('root to sprite =',animPlayer_root_node.get_path_to(anim_animSprite))
+#	print('root to sprite =',animPlayer_root_node.get_path_to(anim_animSprite))
 	
 	var key_anim_id :int= anim.track_find_key(tr_anim, current_time, false)
-	print('key_anim_id ',key_anim_id)
+#	print('key_anim_id ',key_anim_id)
 	var key_anim :String= ''
 	if key_anim_id != -1:
 		key_anim = anim.track_get_key_value(tr_anim, key_anim_id)
@@ -148,11 +149,11 @@ func _on_frame_selected(frame_id :int):
 		key_nextframe_time = anim.track_get_key_time(tr_frame, key_nextframe_id)
 		var key_nextframe_anim_id :int= anim.track_find_key(tr_anim, key_nextframe_time)
 		
-		print("key_nextframe_anim_id ",key_nextframe_anim_id)
+#		print("key_nextframe_anim_id ",key_nextframe_anim_id)
 		var key_nextframe_anim :String= anim.track_get_key_value(tr_anim, key_nextframe_anim_id)
 		if key_nextframe_anim != anim_animation:
 			anim.track_insert_key(tr_anim, key_nextframe_time, key_nextframe_anim)
-	print('nextframe id:',key_nextframe_id,' time:',key_nextframe_time)
+#	print('nextframe id:',key_nextframe_id,' time:',key_nextframe_time)
 	
 	
 	if key_anim == '':
@@ -162,7 +163,7 @@ func _on_frame_selected(frame_id :int):
 		anim.track_insert_key(tr_anim, current_time, anim_animation)
 		
 #	print('____key_anim = ',key_anim)
-	print('inserting frame key')
+#	print('inserting frame key')
 	anim.track_insert_key(tr_frame, current_time, frame_id)
 #	print(abc,' name= ',abc.name)
 #	print(abc.get_groups())
@@ -218,6 +219,50 @@ func _on_scene_changed(scene_root :Node):
 #		emit_signal("warning_issued", '')
 
 
+func _set_anim_animSprite(new_animSprite :AnimatedSprite):
+	var last_animSprite :AnimatedSprite= anim_animSprite
+	if last_animSprite == new_animSprite:
+		return
+	
+	
+	if is_instance_valid(last_animSprite):
+		if is_instance_valid(last_animSprite.frames):
+			if last_animSprite.frames.is_connected("changed", self, "_on_anim_spriteFrames_changed"):
+				last_animSprite.frames.disconnect("changed", self, "_on_anim_spriteFrames_changed")
+
+	if is_instance_valid(new_animSprite):
+		if is_instance_valid(new_animSprite.frames):
+			if !new_animSprite.frames.is_connected("changed", self, "_on_anim_spriteFrames_changed"):
+				new_animSprite.frames.connect("changed", self, "_on_anim_spriteFrames_changed")
+	
+	anim_animSprite = new_animSprite
+
+
+func _set_anim_animation(new_animation :String):
+	var last_animation = anim_animation
+	if anim_animation == new_animation:
+		# if resource_changed connected
+		return
+	
+	anim_animation = new_animation
+	if !is_instance_valid(anim_animSprite):
+		return
+	if !is_instance_valid(anim_animSprite.frames):
+		return
+	
+	if !anim_animSprite.frames.is_connected("changed", self, "_on_anim_spriteFrames_changed"):
+		anim_animSprite.frames.connect("changed", self, "_on_anim_spriteFrames_changed")
+
+func _on_anim_spriteFrames_changed():
+	if !is_instance_valid(anim_animSprite):
+		return
+	if !is_instance_valid(anim_animSprite.frames):
+		return
+	
+	# Update FrameContainer
+	$VBox/AnimHBox/Button.fill_frames()
+
+
 func _get_pluginInstance() -> EditorPlugin:
 	if get_tree().has_group("plugin animation_frame_picker"):
 #		var plugin_group :Array= get_tree().get_nodes_in_group("plugin animatedsprite_frame_picker")
@@ -225,7 +270,7 @@ func _get_pluginInstance() -> EditorPlugin:
 			if node is EditorPlugin:
 				return node
 	else:
-		print("tree doesnt have group")
+		print("[Animation Frame Picker] plugin group not found")
 	return null
 
 func issue_warning(warning_key :String):

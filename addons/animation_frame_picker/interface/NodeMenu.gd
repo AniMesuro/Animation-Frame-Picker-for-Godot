@@ -58,8 +58,8 @@ func _on_PopupMenu_item_selected(id :int):
 	
 	if !is_instance_valid(owner.pluginInstance):
 		owner.pluginInstance = owner._get_pluginInstance()
-		print('Plugin Instance not valid.')
-		return
+#		print('Plugin Instance not valid.')
+#		return
 	
 	icon = owner.pluginInstance.get_editor_interface().get_inspector().get_icon(node_type, "EditorIcons")
 	if item_name != './'+editedSceneRoot.name:

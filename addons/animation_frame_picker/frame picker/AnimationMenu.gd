@@ -118,7 +118,7 @@ func _on_FramePicker_updated_reference(reference):
 			_clear_frames()
 
 func fill_frames():
-	print('filling frames')
+#	print('filling frames')
 #	if !is_instance_valid(framesContainer):
 #		framesContainer = owner.get_node("VBox/FramesHBox/ScrollContainer/FramesContainer")
 	
