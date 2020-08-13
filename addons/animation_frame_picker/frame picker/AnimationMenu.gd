@@ -3,9 +3,9 @@ extends MenuButton
 
 signal frames_filled
 
-const TEX_IconExpand :StreamTexture= preload("res://addons/animatedsprite frame picker/assets/icons/icon_expand.png")
+const TEX_IconExpand :StreamTexture= preload("res://addons/animation_frame_picker/assets/icons/icon_expand.png")
 
-const SCN_FramePreview :PackedScene= preload("res://addons/animatedsprite frame picker/interface/FramePreview.tscn")
+const SCN_FramePreview :PackedScene= preload("res://addons/animation_frame_picker/interface/FramePreview.tscn")
 
 var last_index :int= -1
 

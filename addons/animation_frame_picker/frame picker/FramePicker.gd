@@ -212,9 +212,9 @@ func _on_scene_changed(scene_root :Node):
 
 
 func _get_pluginInstance() -> EditorPlugin:
-	if get_tree().has_group("plugin animatedsprite_frame_picker"):
+	if get_tree().has_group("plugin animation_frame_picker"):
 #		var plugin_group :Array= get_tree().get_nodes_in_group("plugin animatedsprite_frame_picker")
-		for node in get_tree().get_nodes_in_group("plugin animatedsprite_frame_picker"):
+		for node in get_tree().get_nodes_in_group("plugin animation_frame_picker"):
 			if node is EditorPlugin:
 				return node
 	else:

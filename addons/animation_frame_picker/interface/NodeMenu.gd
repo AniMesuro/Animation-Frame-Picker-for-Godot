@@ -1,7 +1,7 @@
 tool
 extends MenuButton
 
-const TEX_IconExpand :StreamTexture= preload("res://addons/animatedsprite frame picker/assets/icons/icon_expand.png")
+const TEX_IconExpand :StreamTexture= preload("res://addons/animation_frame_picker/assets/icons/icon_expand.png")
 
 var last_index :int= -1
 

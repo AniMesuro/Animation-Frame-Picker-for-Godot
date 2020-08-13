@@ -1,13 +1,13 @@
 [gd_scene load_steps=11 format=2]
 
-[ext_resource path="res://addons/animatedsprite frame picker/assets/FramePickerTheme.tres" type="Theme" id=1]
-[ext_resource path="res://addons/animatedsprite frame picker/interface/NodeMenu.tscn" type="PackedScene" id=2]
-[ext_resource path="res://addons/animatedsprite frame picker/frame picker/FramePicker.gd" type="Script" id=3]
-[ext_resource path="res://addons/animatedsprite frame picker/assets/icons/icon_expand.png" type="Texture" id=4]
-[ext_resource path="res://addons/animatedsprite frame picker/frame picker/AnimationMenu.gd" type="Script" id=5]
-[ext_resource path="res://addons/animatedsprite frame picker/frame picker/WarningIcon.gd" type="Script" id=6]
-[ext_resource path="res://addons/animatedsprite frame picker/assets/icons/icon_warning.png" type="Texture" id=7]
-[ext_resource path="res://addons/animatedsprite frame picker/frame picker/ZoomHScroll.gd" type="Script" id=8]
+[ext_resource path="res://addons/animation_frame_picker/assets/FramePickerTheme.tres" type="Theme" id=1]
+[ext_resource path="res://addons/animation_frame_picker/interface/NodeMenu.tscn" type="PackedScene" id=2]
+[ext_resource path="res://addons/animation_frame_picker/frame picker/FramePicker.gd" type="Script" id=3]
+[ext_resource path="res://addons/animation_frame_picker/assets/icons/icon_expand.png" type="Texture" id=4]
+[ext_resource path="res://addons/animation_frame_picker/frame picker/AnimationMenu.gd" type="Script" id=5]
+[ext_resource path="res://addons/animation_frame_picker/frame picker/WarningIcon.gd" type="Script" id=6]
+[ext_resource path="res://addons/animation_frame_picker/assets/icons/icon_warning.png" type="Texture" id=7]
+[ext_resource path="res://addons/animation_frame_picker/frame picker/ZoomHScroll.gd" type="Script" id=8]
 
 [sub_resource type="Image" id=3]
 data = {
@@ -62,7 +62,6 @@ margin_bottom = 24.0
 text = "Select AnimatedSprite"
 msg_no_selection = "Select AnimatedSprite"
 owner_reference = "anim_animSprite"
-node_type = "AnimatedSprite"
 
 [node name="AnimHBox" type="HBoxContainer" parent="VBox"]
 margin_top = 28.0
@@ -115,7 +114,6 @@ margin_bottom = 24.0
 text = "Select AnimationPlayer"
 msg_no_selection = "Select AnimationPlayer"
 owner_reference = "anim_animPlayer"
-node_type = "AnimationPlayer"
 
 [node name="FramesHBox" type="HBoxContainer" parent="VBox"]
 margin_top = 84.0
@@ -159,6 +157,7 @@ size_flags_horizontal = 3
 [node name="WarningIcon" type="TextureRect" parent="VBox/ExtraHBox/WarningHBox"]
 margin_right = 124.0
 margin_bottom = 24.0
+hint_tooltip = "Required nodes for Animation not present in current tree. Please instance required nodes."
 size_flags_horizontal = 3
 texture = ExtResource( 7 )
 expand = true
