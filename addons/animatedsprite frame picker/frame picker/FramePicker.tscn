@@ -1,0 +1,195 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://addons/animatedsprite frame picker/assets/FramePickerTheme.tres" type="Theme" id=1]
+[ext_resource path="res://addons/animatedsprite frame picker/interface/NodeMenu.tscn" type="PackedScene" id=2]
+[ext_resource path="res://addons/animatedsprite frame picker/frame picker/FramePicker.gd" type="Script" id=3]
+[ext_resource path="res://addons/animatedsprite frame picker/assets/icons/icon_expand.png" type="Texture" id=4]
+[ext_resource path="res://addons/animatedsprite frame picker/frame picker/AnimationMenu.gd" type="Script" id=5]
+[ext_resource path="res://addons/animatedsprite frame picker/frame picker/WarningIcon.gd" type="Script" id=6]
+[ext_resource path="res://addons/animatedsprite frame picker/assets/icons/icon_warning.png" type="Texture" id=7]
+[ext_resource path="res://addons/animatedsprite frame picker/frame picker/ZoomHScroll.gd" type="Script" id=8]
+
+[sub_resource type="Image" id=3]
+data = {
+"data": PoolByteArray( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ),
+"format": "LumAlpha8",
+"height": 16,
+"mipmaps": false,
+"width": 16
+}
+
+[sub_resource type="ImageTexture" id=2]
+flags = 4
+flags = 4
+image = SubResource( 3 )
+size = Vector2( 16, 16 )
+
+[node name="FramePicker" type="Control"]
+margin_right = 256.0
+margin_bottom = 287.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource( 1 )
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBox" type="VBoxContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+rect_clip_content = true
+size_flags_horizontal = 3
+size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AnimSpriteHBox" type="HBoxContainer" parent="VBox"]
+margin_right = 256.0
+margin_bottom = 24.0
+
+[node name="Label" type="Label" parent="VBox/AnimSpriteHBox"]
+margin_top = 5.0
+margin_right = 90.0
+margin_bottom = 18.0
+text = "AnimatedSprite:"
+
+[node name="Button" parent="VBox/AnimSpriteHBox" instance=ExtResource( 2 )]
+margin_left = 94.0
+margin_right = 256.0
+margin_bottom = 24.0
+text = "Select AnimatedSprite"
+msg_no_selection = "Select AnimatedSprite"
+owner_reference = "anim_animSprite"
+node_type = "AnimatedSprite"
+
+[node name="AnimHBox" type="HBoxContainer" parent="VBox"]
+margin_top = 28.0
+margin_right = 256.0
+margin_bottom = 52.0
+
+[node name="Label" type="Label" parent="VBox/AnimHBox"]
+margin_top = 5.0
+margin_right = 78.0
+margin_bottom = 18.0
+text = "> Animation: "
+
+[node name="Button" type="MenuButton" parent="VBox/AnimHBox"]
+margin_left = 82.0
+margin_right = 256.0
+margin_bottom = 24.0
+grow_horizontal = 0
+rect_min_size = Vector2( 0, 24 )
+rect_clip_content = true
+size_flags_horizontal = 3
+text = "No AnimatedSprite selected"
+icon = ExtResource( 4 )
+flat = false
+clip_text = true
+align = 0
+expand_icon = true
+script = ExtResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+msg_no_selection = "Select Animation"
+msg_no_animspr_selection = "No AnimatedSprite selected"
+owner_reference = "anim_animation"
+
+[node name="AnimPlayerHBox" type="HBoxContainer" parent="VBox"]
+margin_top = 56.0
+margin_right = 256.0
+margin_bottom = 80.0
+
+[node name="Label" type="Label" parent="VBox/AnimPlayerHBox"]
+margin_top = 5.0
+margin_right = 90.0
+margin_bottom = 18.0
+text = "AnimationPlayer"
+
+[node name="Button" parent="VBox/AnimPlayerHBox" instance=ExtResource( 2 )]
+margin_left = 94.0
+margin_right = 256.0
+margin_bottom = 24.0
+text = "Select AnimationPlayer"
+msg_no_selection = "Select AnimationPlayer"
+owner_reference = "anim_animPlayer"
+node_type = "AnimationPlayer"
+
+[node name="FramesHBox" type="HBoxContainer" parent="VBox"]
+margin_top = 84.0
+margin_right = 256.0
+margin_bottom = 259.0
+rect_clip_content = true
+size_flags_vertical = 3
+
+[node name="ScrollContainer" type="ScrollContainer" parent="VBox/FramesHBox"]
+margin_right = 256.0
+margin_bottom = 175.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+scroll_horizontal_enabled = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="FramesContainer" type="GridContainer" parent="VBox/FramesHBox/ScrollContainer"]
+margin_bottom = 175.0
+size_flags_vertical = 3
+custom_constants/vseparation = 6
+custom_constants/hseparation = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ExtraHBox" type="HBoxContainer" parent="VBox"]
+margin_top = 263.0
+margin_right = 256.0
+margin_bottom = 287.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="WarningHBox" type="HBoxContainer" parent="VBox/ExtraHBox"]
+margin_right = 124.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+
+[node name="WarningIcon" type="TextureRect" parent="VBox/ExtraHBox/WarningHBox"]
+margin_right = 124.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+texture = ExtResource( 7 )
+expand = true
+stretch_mode = 5
+script = ExtResource( 6 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ZoomIcon" type="TextureRect" parent="VBox/ExtraHBox"]
+margin_left = 128.0
+margin_right = 152.0
+margin_bottom = 24.0
+grow_horizontal = 0
+rect_min_size = Vector2( 24, 24 )
+size_flags_horizontal = 8
+size_flags_vertical = 4
+texture = SubResource( 2 )
+stretch_mode = 4
+
+[node name="ZoomHScroll" type="HSlider" parent="VBox/ExtraHBox"]
+margin_left = 156.0
+margin_top = 4.0
+margin_right = 256.0
+margin_bottom = 20.0
+grow_horizontal = 0
+rect_min_size = Vector2( 100, 0 )
+size_flags_horizontal = 0
+size_flags_vertical = 4
+min_value = 4.0
+max_value = 13.6
+step = 0.2
+value = 4.0
+script = ExtResource( 8 )
