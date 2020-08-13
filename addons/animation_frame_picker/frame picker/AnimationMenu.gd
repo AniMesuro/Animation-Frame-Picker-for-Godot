@@ -40,10 +40,8 @@ func _on_Button_pressed() -> void:
 	popup = get_popup()
 	popup.clear()
 	var animSprite :AnimatedSprite= owner.anim_animSprite
-#	print('')
 	if !is_instance_valid(animSprite):
-#		print('animsprite not valid.')
-		text = msg_no_animspr_selection#"Please select AnimatedSprite first"
+		text = msg_no_animspr_selection
 		hint_tooltip = text
 		popup.clear()
 		return
@@ -63,18 +61,14 @@ func _on_Button_pressed() -> void:
 		for i in anim_names.size():
 			if anim_names[i] == '':
 				anim_names.remove(i)
-#				print('anim_names = ', anim_names)
 				break
 	
 	if anim_names.size() == 0:
 		text = msg_no_selection
 		return
 	popup.clear()
-	for anim_name in anim_names:#spriteFrames.get_animation_names():
+	for anim_name in anim_names:
 		popup.add_item(anim_name)
-#	for i in edited_scene_child.size():
-#		if (edited_scene_child[i].get_class() == node_type):
-#			popup.add_item(editedSceneRoot.get_path_to(edited_scene_child[i]))
 	
 
 
@@ -86,13 +80,9 @@ func _on_PopupMenu_item_selected(id :int):
 	
 	if !is_instance_valid(owner.pluginInstance):
 		owner.pluginInstance = owner._get_pluginInstance()
-#	print("plugininstance ",owner.pluginInstance)
 	icon = owner.pluginInstance.get_editor_interface().get_inspector().get_icon("Animation", "EditorIcons")
-	owner.set(owner_reference, item_name)#editedSceneRoot.get_node(item_name))
-#	owner.emit_signal("updated_reference", owner_reference)
+	owner.set(owner_reference, item_name)
 	fill_frames()
-#	if !is_instance_valid(owner.anim_animSprite.frames):
-#		owner.issue_warning("animsprite_empty")
 
 func _on_FramePicker_updated_reference(reference):
 	if !is_instance_valid(owner.anim_animSprite):
@@ -110,29 +100,21 @@ func _on_FramePicker_updated_reference(reference):
 			icon = TEX_IconExpand
 			_clear_frames()
 		elif !owner.anim_animSprite.frames.has_animation(owner.anim_animation):
-	#		if owner.anim_animation != "":
 			owner.fix_warning("animsprite_empty")
 			owner.anim_animation = ""
 			text = msg_no_selection
 			icon = TEX_IconExpand
 			_clear_frames()
 
-func fill_frames():
-#	print('filling frames')
-#	if !is_instance_valid(framesContainer):
-#		framesContainer = owner.get_node("VBox/FramesHBox/ScrollContainer/FramesContainer")
-	
+func fill_frames():	
 	_clear_frames()
 	
 	var animSprite :AnimatedSprite= owner.anim_animSprite
 	if !is_instance_valid(animSprite):
-		print('animsprite not valid')
 		return
 	var spriteFrames :SpriteFrames= owner.anim_animSprite.frames
 	var anim :String= owner.anim_animation
-#	print('spritefram ',spriteFrames)
 	if !is_instance_valid(spriteFrames):
-		print('spriteframes not valid')
 		return
 	if !spriteFrames.has_animation(anim):
 		return
@@ -145,9 +127,7 @@ func fill_frames():
 		framesContainer.add_child(framePreview)
 		framePreview.texture_normal = frame
 		framePreview.frame_id = i
-#		framePreview.owner = self
 	emit_signal("frames_filled")
-#	_update_frame_sizes()
 
 func _clear_frames():
 	#Clear children

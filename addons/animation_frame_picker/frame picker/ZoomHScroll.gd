@@ -15,7 +15,6 @@ func _ready() -> void:
 	_update_frame_sizes()
 	owner.get_node("VBox/AnimHBox/Button").connect('frames_filled', self, '_update_frame_sizes')
 	print(owner.get_node("VBox/AnimHBox/Button"))
-#	owner.connect("updated_reference",self,"_on_FramePicker_updated_reference")
 
 func _on_ScrollContainer_resized():
 	if get_tree().edited_scene_root == owner:
@@ -47,12 +46,7 @@ func _update_frame_sizes():
 		f.backgroundRect.rect_min_size = f.rect_min_size
 	
 	
-#	var new_columns :int= floor(scrollContainer.rect_size.x / (framesContainer_children[0].rect_size.x + 3)) #- (2 * framesContainer_children[0].rect_size.x)
+#	Still glitches sometimes, but it's better than the previous one.
 	var new_columns :int= floor(owner.rect_size.x / (framesContainer_children[0].rect_size.x + 2))
-#	print('__val col ',value,';',new_columns)
 	if new_columns > 0:
 		framesContainer.columns =  new_columns
-
-#func _on_FramePicker_updated_reference(reference):
-#	if !is_instance_valid(owner.anim_animSprite):
-#

@@ -10,18 +10,8 @@ func _ready() -> void:
 	connect( "mouse_entered", self, "_on_mouse_entered")
 	connect( "mouse_exited", self, "_on_mouse_exited")
 	connect("pressed", self, "_on_pressed")
-#	print(name,' owner= ',owner)
 
 func _on_pressed():
-#	if !is_inside_tree():
-#		print('not in tree')
-#	if is_instance_valid(self):
-#		print('frame not valid')
-#		yield(get_tree(), "idle_frame")
-
-
-#	print('owner,self ',owner,' ',self)
-#	print('texture pressed')
 	if !is_instance_valid(owner):
 		owner = get_parent().owner
 	owner.emit_signal("frame_selected", frame_id)

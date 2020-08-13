@@ -38,12 +38,8 @@ func _on_warning_issued(warning_key :String):
 
 # If a warning is on the warning_data, it will be removed
 func _on_warning_fixed(warning_key :String):
-#	if warning_key == '' or warning_key == current_warning:
-#		return
-
 	# Multiple warning system: If a warning is fixed, it finds the next
 	if (warning_key in warning_data):
-#		if warning_key == current_warning:
 		visible = false
 		hint_tooltip = WarningText['']
 			
@@ -55,4 +51,3 @@ func _on_warning_fixed(warning_key :String):
 		
 		if warning_data.size() > 0:
 			owner.issue_warning(warning_data[-1])
-#		print(warning_key," in warning data!!!!!!!!!!!")

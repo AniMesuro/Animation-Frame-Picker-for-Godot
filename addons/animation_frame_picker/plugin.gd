@@ -14,7 +14,7 @@ var group_plugin :String= "plugin animation_frame_picker"
 
 var SCN_FramePicker :PackedScene= load("res://addons/animation_frame_picker/frame picker/FramePicker.tscn")
 
-# Editor
+# Editor References
 var animationPlayerEditor :Node
 var animationPlayerEditor_CurrentTime_LineEdit :LineEdit
 var animationPlayerEditor_CurrentAnimation_OptionButton :OptionButton
@@ -31,7 +31,6 @@ func _enter_tree() -> void:
 #		framePicker.queue_free()
 	framePicker = SCN_FramePicker.instance()
 	add_control_to_dock(DOCK_SLOT_LEFT_UR, framePicker)
-#	editor.add
 
 func _exit_tree() -> void:
 	
@@ -78,14 +77,4 @@ func _get_references():
 	if !is_instance_valid(animationPlayerEditor_CurrentAnimation_OptionButton):
 		print("[Animation Frame Picker] Couldn't get AnimationPlayerEditor/HBoxContainer/OptionButton reference")
 		return
-	
-#	print("AnimationPlayerEditor is ",animationPlayerEditor)
-#	print("AnimationPlayerEditor CurrentTime LineEdit =", animationPlayerEditor_CurrentTime_LineEdit)
-#	print("AnimationPlayerEditor CurrentAnimation OptionButton =",animationPlayerEditor_CurrentAnimation_OptionButton)
-	
-#	animationPlayerEditor_CurrentTime_LineEdit = animationPlayerEditor.get_node('@@5686/@@5697/@@5695')
-#	print('rootcanvas133 ',get_tree().get_nodes_in_group('root_canvas133'))
-#	animationPlayerEditor_CurrentAnimation_OptionButton = animationPlayerEditor.get_node('@@5686/@@5724')
-	
-#	print("animationPlayerEditor_CurrentAnimation_OptionButton id ",animationPlayerEditor_CurrentAnimation_OptionButton.get_instance_id())
 	

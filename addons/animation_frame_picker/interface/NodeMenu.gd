@@ -20,22 +20,15 @@ func _ready() -> void:
 	owner.connect('updated_reference', self, '_on_FramePicker_updated_reference')
 	text = msg_no_selection
 
-#func _exit_tree() -> void:
-#	disconnect('pressed', self, '_on_Button_pressed')
-#	popup.disconnect('id_pressed', self, '_on_PopupMenu_item_selected')
-
 func _on_Button_pressed() -> void:
 	editedSceneRoot = get_tree().edited_scene_root
 	if !is_instance_valid(editedSceneRoot):
-#		print('editedscene not valid')
 		owner.issue_warning("edited_scene_invalid")
 		return
 	if !is_instance_valid(popup):
-#		print('popup not valid')
 		popup = get_popup()
 	var edited_scene_child = owner.get_relevant_children()
 	owner.fix_warning("edited_scene_invalid")
-#	print('edited child - ',edited_scene_child)
 
 	popup.clear()
 	for i in edited_scene_child.size():
@@ -58,8 +51,6 @@ func _on_PopupMenu_item_selected(id :int):
 	
 	if !is_instance_valid(owner.pluginInstance):
 		owner.pluginInstance = owner._get_pluginInstance()
-#		print('Plugin Instance not valid.')
-#		return
 	
 	icon = owner.pluginInstance.get_editor_interface().get_inspector().get_icon(node_type, "EditorIcons")
 	if item_name != './'+editedSceneRoot.name:
@@ -67,11 +58,9 @@ func _on_PopupMenu_item_selected(id :int):
 	else:
 		owner.set(owner_reference, editedSceneRoot)
 		
-#	print('owner ref ', owner_reference,' ',owner.get(owner_reference))
 	owner.emit_signal("updated_reference", owner_reference)
 
 func _on_FramePicker_updated_reference(reference):
-#	print(reference,' ',owner.get(reference))
 	if !is_instance_valid(owner.get(owner_reference)):
 		text = msg_no_selection
 		icon = TEX_IconExpand
