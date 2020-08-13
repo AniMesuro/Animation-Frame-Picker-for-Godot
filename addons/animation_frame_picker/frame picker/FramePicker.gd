@@ -18,8 +18,15 @@ onready var framesContainer :GridContainer= $VBox/FramesHBox/ScrollContainer/Fra
 
 func _ready() -> void:
 	pluginInstance = _get_pluginInstance()
+	
+	# If being edited.
+	if get_tree().edited_scene_root == self:
+		return
+	
 	connect("frame_selected", self, "_on_frame_selected")
 	pluginInstance.connect("scene_changed", self, "_on_scene_changed")
+	if !is_instance_valid(get_tree().edited_scene_root):
+		issue_warning('edited_scene_invalid')
 
 
 func get_relevant_children() -> Array:

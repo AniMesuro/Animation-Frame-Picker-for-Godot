@@ -51,8 +51,12 @@ func _on_Button_pressed() -> void:
 	if !is_instance_valid(spriteFrames):
 		text = "Null SpriteFrames"
 		hint_tooltip = text
+		owner.issue_warning("animsprite_empty")
 		return
+	text = msg_no_selection
+	hint_tooltip = text
 	var anim_names :PoolStringArray= spriteFrames.get_animation_names()
+	owner.fix_warning("animsprite_empty")
 	
 	# Empty Strings ("") should be Invalid.
 	if '' in anim_names:
@@ -65,6 +69,7 @@ func _on_Button_pressed() -> void:
 	if anim_names.size() == 0:
 		text = msg_no_selection
 		return
+	popup.clear()
 	for anim_name in anim_names:#spriteFrames.get_animation_names():
 		popup.add_item(anim_name)
 #	for i in edited_scene_child.size():
@@ -77,6 +82,7 @@ func _on_PopupMenu_item_selected(id :int):
 	last_index = id
 	var item_name :String= popup.get_item_text(id)
 	text = item_name
+	hint_tooltip = text
 	
 	if !is_instance_valid(owner.pluginInstance):
 		owner.pluginInstance = owner._get_pluginInstance()
@@ -85,7 +91,8 @@ func _on_PopupMenu_item_selected(id :int):
 	owner.set(owner_reference, item_name)#editedSceneRoot.get_node(item_name))
 #	owner.emit_signal("updated_reference", owner_reference)
 	fill_frames()
-	owner.issue_warning("animsprite_empty")
+#	if !is_instance_valid(owner.anim_animSprite.frames):
+#		owner.issue_warning("animsprite_empty")
 
 func _on_FramePicker_updated_reference(reference):
 	if !is_instance_valid(owner.anim_animSprite):

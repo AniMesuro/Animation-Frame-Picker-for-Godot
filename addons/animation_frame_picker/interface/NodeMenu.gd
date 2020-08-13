@@ -27,12 +27,14 @@ func _ready() -> void:
 func _on_Button_pressed() -> void:
 	editedSceneRoot = get_tree().edited_scene_root
 	if !is_instance_valid(editedSceneRoot):
-		print('editedscene not valid')
+#		print('editedscene not valid')
+		owner.issue_warning("edited_scene_invalid")
 		return
 	if !is_instance_valid(popup):
-		print('popup not valid')
+#		print('popup not valid')
 		popup = get_popup()
 	var edited_scene_child = owner.get_relevant_children()
+	owner.fix_warning("edited_scene_invalid")
 #	print('edited child - ',edited_scene_child)
 
 	popup.clear()
@@ -52,6 +54,7 @@ func _on_PopupMenu_item_selected(id :int):
 	last_index = id
 	var item_name :String= popup.get_item_text(id)
 	text = item_name
+	hint_tooltip = text
 	
 	if !is_instance_valid(owner.pluginInstance):
 		owner.pluginInstance = owner._get_pluginInstance()

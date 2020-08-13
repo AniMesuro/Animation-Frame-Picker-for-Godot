@@ -2,16 +2,19 @@ tool
 extends TextureRect
 
 var framePicker :Control
-#var
+
 
 var WarningText :Dictionary= {
 	'': "",
 	'lacking_nodes': "Required nodes for Animation not present in current tree. Please instance required nodes.",
 	'cant_frame': "Could not add keyframe because FramePicker lacks parameters.",
 	'animplayeredit_empty': "Could not add keyframe because Animation is not selected on AnimationPlayerEditor.",
-	'animsprite_empty': "AnimatedSprite lacks a SpriteFrames resource."
+	'animsprite_empty': "AnimatedSprite lacks a SpriteFrames resource.",
+	'edited_scene_invalid': "Current Edited Scene is Invalid."
 }
 var current_warning :String= ''
+
+# Maybe toolhint should display all warning data instead of just current_warning?
 var warning_data :PoolStringArray= PoolStringArray([])
 
 func _enter_tree() -> void:
