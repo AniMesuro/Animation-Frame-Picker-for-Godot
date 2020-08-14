@@ -1,6 +1,7 @@
 # Animation Frame Picker for Godot
 
-A Godot Engine add-on made by AniMesuro that adds a Frame Picker functionality for 2D Animation,
+![Imgur](https://i.imgur.com/32I4EVb.png)
+</p>A Godot Engine add-on made by AniMesuro that adds a Frame Picker functionality for 2D Animation,
 allowing for more efficient keyframing on an animation track.
 
 # Table of Contents
