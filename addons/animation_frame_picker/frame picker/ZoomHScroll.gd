@@ -14,7 +14,7 @@ func _ready() -> void:
 	scrollContainer.connect("resized", self, "_on_ScrollContainer_resized")
 	_update_frame_sizes()
 	owner.get_node("VBox/AnimHBox/Button").connect('frames_filled', self, '_update_frame_sizes')
-	
+
 func _on_ScrollContainer_resized():
 	if get_tree().edited_scene_root == owner:
 		return
