@@ -11,6 +11,7 @@ allowing for more efficient keyframing on an animation track.
 - [Screenshots](#screenshots)
   - [Frame Picker](#frame-picker)
   - [Tool in use](#tool-in-use)
+- [Videos](#videos)
 - [Disclaimer](#disclaimer)
 - [Bug Report](#bug-report)
 
@@ -32,7 +33,10 @@ The plugin adds a "Frame Picker" control to the second Upper Left Dock.
 ## Tool in use
 ![Imgur](https://i.imgur.com/DVivtOA.png)
 
+# Videos
 
+[![Demo](http://i3.ytimg.com/vi/CtEqO24e708/maxresdefault.jpg)](https://www.youtube.com/watch?v=CtEqO24e708)
+</p>Video Demo of Frame Picker add-on in use on a Godot project.
 
 # Disclaimer
 It's advisable you configure the SpriteFrames BEFORE keyframing using the Frame Picker. Any frame you remove from SpriteFrames could make a frame key on the animation track invalid (frame > frame_count)
