@@ -12,7 +12,7 @@ extends EditorPlugin
 
 var group_plugin :String= "plugin animation_frame_picker"
 
-var SCN_FramePicker :PackedScene= load("res://addons/animation_frame_picker/frame picker/FramePicker.tscn")
+const SCN_FramePicker: PackedScene = preload("res://addons/animation_frame_picker/dock/FramePicker.tscn")
 
 # Editor References
 var animationPlayerEditor :Node
@@ -38,14 +38,13 @@ func _exit_tree() -> void:
 		remove_control_from_docks(framePicker)
 #		framePicker.queue_free()
 
+
+
 func _get_references():
-	# AnimationPlayerEditor
-	for node in get_tree().get_nodes_in_group('_vp_unhandled_key_input1176'):
-		if node.get_class() == 'AnimationPlayerEditor':
-			animationPlayerEditor = node
-			break
+	# Godot 3.4.3
+	animationPlayerEditor = _select_from_child_ids(_get_editorVBox(), [1, 1, 1, 0, 0, 1, 0, 1])
 	if !is_instance_valid(animationPlayerEditor):
-		print("[Animation Frame Picker] Couldn't get AnimationPlayerEditor reference")
+		print("[Animation Frame Picker] Couldn't get Editor's AnimationPlayerEditor reference")
 		return
 	
 	# Get HBoxContainer
@@ -78,3 +77,17 @@ func _get_references():
 		print("[Animation Frame Picker] Couldn't get AnimationPlayerEditor/HBoxContainer/OptionButton reference")
 		return
 	
+func _select_from_child_ids(current_node: Node, child_ids: PoolIntArray):
+	var last_child: Node = current_node
+	while child_ids.size() != 0:
+		last_child = last_child.get_child(child_ids[0])
+		child_ids.remove(0)
+		if child_ids.size() == 0:
+			return last_child
+	return null
+
+func _get_editorVBox():
+	var _editorControl: Control = get_editor_interface().get_base_control()
+	for child in _editorControl.get_children():
+		if child.get_class() == 'VBoxContainer':
+			return child
