@@ -24,19 +24,16 @@ func _enter_tree() -> void:
 	add_to_group(group_plugin)
 	
 	_get_references()
-	var editor :EditorInterface= get_editor_interface()
+	var editor: EditorInterface = get_editor_interface()
 	
-	if is_instance_valid(framePicker):
-		remove_control_from_docks(framePicker)
-#		framePicker.queue_free()
+	for orphanDock in get_tree().get_nodes_in_group("_plugindock frame picker"):
+		remove_control_from_docks(orphanDock)
 	framePicker = SCN_FramePicker.instance()
-	add_control_to_dock(DOCK_SLOT_LEFT_UR, framePicker)
+	add_control_to_dock(DOCK_SLOT_LEFT_BR, framePicker)
 
 func _exit_tree() -> void:
-	
-	if is_instance_valid(framePicker):
-		remove_control_from_docks(framePicker)
-#		framePicker.queue_free()
+	for dock in get_tree().get_nodes_in_group("_plugindock frame picker"):
+		remove_control_from_docks(dock)
 
 
 

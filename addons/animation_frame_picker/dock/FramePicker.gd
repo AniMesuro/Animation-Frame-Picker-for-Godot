@@ -23,6 +23,9 @@ func _ready() -> void:
 	if get_tree().edited_scene_root == self:
 		return
 	
+	var dock_group: String = "_plugindock frame picker"
+	add_to_group(dock_group)
+	
 	connect("frame_selected", self, "_on_frame_selected")
 	pluginInstance.connect("scene_changed", self, "_on_scene_changed")
 	if !is_instance_valid(get_tree().edited_scene_root):
