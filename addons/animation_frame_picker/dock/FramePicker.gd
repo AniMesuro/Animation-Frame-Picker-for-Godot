@@ -11,7 +11,7 @@ var pluginInstance: EditorPlugin
 var anim_animSprite: AnimatedSprite setget _set_anim_animSprite
 var anim_spriteFrames: SpriteFrames
 var anim_animation: String setget _set_anim_animation
-var anim_animPlayer: AnimationPlayer
+var anim_animPlayer: AnimationPlayer setget _set_anim_animPlayer
 var anim: Animation
 
 onready var framesContainer: GridContainer = $VBox/FramesHBox/ScrollContainer/FramesContainer
@@ -22,7 +22,6 @@ func _ready() -> void:
 	# If being edited.
 	if get_tree().edited_scene_root == self:
 		return
-	
 	var dock_group: String = "_plugindock frame picker"
 	add_to_group(dock_group)
 	
@@ -30,7 +29,6 @@ func _ready() -> void:
 	pluginInstance.connect("scene_changed", self, "_on_scene_changed")
 	if !is_instance_valid(get_tree().edited_scene_root):
 		issue_warning('edited_scene_invalid')
-
 
 func get_relevant_children() -> Array:
 	var editedSceneRoot = get_tree().edited_scene_root
@@ -189,6 +187,15 @@ func _set_anim_animation(new_animation :String):
 	if !anim_animSprite.frames.is_connected("changed", self, "_on_anim_spriteFrames_changed"):
 		anim_animSprite.frames.connect("changed", self, "_on_anim_spriteFrames_changed")
 
+func _set_anim_animPlayer(new_anim_animPlayer: AnimationPlayer):
+	anim_animPlayer = new_anim_animPlayer
+	
+	var editorInterface: EditorInterface = pluginInstance.get_editor_interface()
+	var editorSelection: EditorSelection = editorInterface.get_selection()
+	if anim_animPlayer in editorSelection.get_selected_nodes():
+		editorSelection.remove_node(anim_animPlayer)
+	editorSelection.add_node(new_anim_animPlayer)
+
 func _on_anim_spriteFrames_changed():
 	if !is_instance_valid(anim_animSprite):
 		return
@@ -200,12 +207,9 @@ func _on_anim_spriteFrames_changed():
 
 
 func _get_pluginInstance() -> EditorPlugin:
-	if get_tree().has_group("plugin animation_frame_picker"):
-		for node in get_tree().get_nodes_in_group("plugin animation_frame_picker"):
-			if node is EditorPlugin:
-				return node
-	else:
-		print("[Animation Frame Picker] plugin group not found")
+	for node in get_tree().get_nodes_in_group("plugin animation_frame_picker"):
+		if node is EditorPlugin:
+			return node
 	return null
 
 func issue_warning(warning_key :String):
