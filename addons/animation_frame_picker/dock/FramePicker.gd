@@ -6,15 +6,15 @@ signal updated_reference (reference_name)
 signal warning_issued (warning_key)
 signal warning_fixed (warning_key)
 
-var pluginInstance :EditorPlugin
+var pluginInstance: EditorPlugin
 
-var anim_animSprite :AnimatedSprite setget _set_anim_animSprite
-var anim_spriteFrames :SpriteFrames
-var anim_animation :String setget _set_anim_animation
-var anim_animPlayer :AnimationPlayer
-var anim :Animation
+var anim_animSprite: AnimatedSprite setget _set_anim_animSprite
+var anim_spriteFrames: SpriteFrames
+var anim_animation: String setget _set_anim_animation
+var anim_animPlayer: AnimationPlayer
+var anim: Animation
 
-onready var framesContainer :GridContainer= $VBox/FramesHBox/ScrollContainer/FramesContainer
+onready var framesContainer: GridContainer = $VBox/FramesHBox/ScrollContainer/FramesContainer
 
 func _ready() -> void:
 	pluginInstance = _get_pluginInstance()
@@ -68,8 +68,10 @@ func _on_frame_selected(frame_id :int):
 		issue_warning('cant_frame')
 		return
 	
+	if !is_instance_valid(pluginInstance.animationPlayerEditor_CurrentAnimation_OptionButton):
+		pluginInstance.get_references()
 	
-	var _anim :String= pluginInstance.animationPlayerEditor_CurrentAnimation_OptionButton.text
+	var _anim: String = pluginInstance.animationPlayerEditor_CurrentAnimation_OptionButton.text
 	if _anim in anim_animPlayer.get_animation_list():
 		if _anim == '':
 			issue_warning("animplayeredit_empty")

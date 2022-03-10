@@ -23,7 +23,7 @@ var framePicker :Control
 func _enter_tree() -> void:
 	add_to_group(group_plugin)
 	
-	_get_references()
+	get_references()
 	var editor: EditorInterface = get_editor_interface()
 	
 	for orphanDock in get_tree().get_nodes_in_group("_plugindock frame picker"):
@@ -37,7 +37,7 @@ func _exit_tree() -> void:
 
 
 
-func _get_references():
+func get_references():
 	# Godot 3.4.3
 	animationPlayerEditor = _select_from_child_ids(_get_editorVBox(), [1, 1, 1, 0, 0, 1, 0, 1])
 	if !is_instance_valid(animationPlayerEditor):
