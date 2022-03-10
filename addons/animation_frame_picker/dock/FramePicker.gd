@@ -192,8 +192,7 @@ func _set_anim_animPlayer(new_anim_animPlayer: AnimationPlayer):
 	
 	var editorInterface: EditorInterface = pluginInstance.get_editor_interface()
 	var editorSelection: EditorSelection = editorInterface.get_selection()
-	if anim_animPlayer in editorSelection.get_selected_nodes():
-		editorSelection.remove_node(anim_animPlayer)
+	editorSelection.clear()
 	editorSelection.add_node(new_anim_animPlayer)
 
 func _on_anim_spriteFrames_changed():
