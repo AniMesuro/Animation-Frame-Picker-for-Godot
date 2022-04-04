@@ -65,12 +65,13 @@ func _on_FramePicker_updated_reference(reference):
 		text = msg_no_selection
 		icon = TEX_IconExpand
 		owner.fix_warning('lacking_nodes')
-	elif owner.get(owner_reference).owner != get_tree().edited_scene_root:
-		if owner.get(owner_reference) == get_tree().edited_scene_root:
-			return
-		text = msg_no_selection
-		icon = TEX_IconExpand
-		owner.fix_warning('lacking_nodes')
+#	elif owner.get(owner_reference).owner != get_tree().edited_scene_root:
+#		if owner.get(owner_reference) == get_tree().edited_scene_root:
+#			return
+#		text = msg_no_selection
+#		icon = TEX_IconExpand
+#		owner.fix_warning('lacking_nodes')
+#		pass
 	else:
 		owner.fix_warning("animsprite_empty")
 		owner.fix_warning('lacking_nodes')

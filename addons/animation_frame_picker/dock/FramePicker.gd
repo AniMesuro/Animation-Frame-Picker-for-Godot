@@ -34,27 +34,25 @@ func get_relevant_children() -> Array:
 	var editedSceneRoot = get_tree().edited_scene_root
 	if !is_instance_valid(editedSceneRoot):
 		return []
-	var edited_scene_tree :Array= [editedSceneRoot]
-	
-	#For each child and its 5 children layers, reference itself to the edited_scene_tree Array
-	for child in editedSceneRoot.get_children():
-		edited_scene_tree.append(child)
 		
-		for child_a in child.get_children():
-			edited_scene_tree.append(child_a)
-			
-			for child_b in child_a.get_children():
-				edited_scene_tree.append(child_b)
-				
-				for child_c in child_b.get_children():
-					edited_scene_tree.append(child_c)
-					
-					for child_d in child_c.get_children():
-						edited_scene_tree.append(child_d)
-						
-						for child_e in child_d.get_children():
-							edited_scene_tree.append(child_e)
-	return edited_scene_tree
+	_select_children_as_array(editedSceneRoot, true, 300)
+	return _edited_scene_nodes
+
+var _edited_scene_nodes: Array = []
+var _select_children_as_array_iter: int = 0
+func _select_children_as_array(parent: Node, is_root: bool = false, max_iters: int = 0):
+	if is_root:
+		_edited_scene_nodes = []
+		_select_children_as_array_iter = max_iters
+		
+	for child in parent.get_children():
+		if _select_children_as_array_iter == 0:
+			return
+		_select_children_as_array_iter -=1
+		
+		_edited_scene_nodes.append(child)
+		_select_children_as_array(child)
+
 
 func _on_frame_selected(frame_id :int):
 	if !is_instance_valid(pluginInstance):
