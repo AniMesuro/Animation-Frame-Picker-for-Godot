@@ -106,8 +106,10 @@ func _on_frame_selected(frame_id :int):
 	
 	var animPlayer_root_node :Node= anim_animPlayer.get_node(anim_animPlayer.root_node)
 
-	var tr_frame :int= anim.find_track(str(animPlayer_root_node.get_path_to(anim_animSprite))+':frame')
-	var tr_anim :int= anim.find_track(str(animPlayer_root_node.get_path_to(anim_animSprite))+':animation')
+	var do_ignore_frames: bool = true
+	var tr_frames: int = anim.find_track(str(animPlayer_root_node.get_path_to(anim_animSprite))+':frames')
+	var tr_frame: int = anim.find_track(str(animPlayer_root_node.get_path_to(anim_animSprite))+':frame')
+	var tr_anim: int = anim.find_track(str(animPlayer_root_node.get_path_to(anim_animSprite))+':animation')
 	if tr_frame == -1:
 		tr_frame = anim.add_track(Animation.TYPE_VALUE)
 		anim.track_set_path(tr_frame, str(animPlayer_root_node.get_path_to(anim_animSprite))+':frame')
@@ -116,29 +118,49 @@ func _on_frame_selected(frame_id :int):
 		tr_anim = anim.add_track(Animation.TYPE_VALUE)
 		anim.track_set_path(tr_anim, str(animPlayer_root_node.get_path_to(anim_animSprite))+':animation')
 		anim.value_track_set_update_mode(tr_anim, Animation.UPDATE_DISCRETE)
+		anim.track_insert_key(tr_anim, 0.0, anim_animation)
+	## !!!!!
+	if tr_frames != -1:
+		do_ignore_frames = false
+#		tr_frames = anim.add_track(Animation.TYPE_VALUE)
+#		anim.track_set_path(tr_frames, str(animPlayer_root_node.get_path_to(anim_animSprite))+':frames')
+#		anim.value_track_set_update_mode(tr_frames, Animation.UPDATE_DISCRETE)
+#		anim.track_insert_key(tr_frames, 0.0, anim_animSprite.frames)
 	
-	var key_anim_id :int= anim.track_find_key(tr_anim, current_time, false)
-	var key_anim :String= ''
+	var key_anim_id: int = anim.track_find_key(tr_anim, current_time, false)
+	var key_anim: String = ''
+	var key_frames: SpriteFrames = null
 	if key_anim_id != -1:
 		key_anim = anim.track_get_key_value(tr_anim, key_anim_id)
 	
+	var key_frames_id: int = -1
+	if !do_ignore_frames:
+		key_frames_id = anim.track_find_key(tr_frames, current_time, false)
+		if key_frames_id != -1:
+			key_frames = anim.track_get_key_value(tr_frames, key_frames_id)
+	var currentFrames: SpriteFrames = anim_animSprite.frames
 	# Gets next frame and keyframe next frame's animation
-	var key_nextframe_id :int= anim.track_find_key(tr_frame, current_time) + 1
-	var key_nextframe_time :float
-	if key_nextframe_id < anim.track_get_key_count(tr_frame):
-		key_nextframe_time = anim.track_get_key_time(tr_frame, key_nextframe_id)
-		var key_nextframe_anim_id :int= anim.track_find_key(tr_anim, key_nextframe_time)
+	var key_next_frame_id: int = anim.track_find_key(tr_frame, current_time) + 1
+	var key_next_frame_time: float
+	if key_next_frame_id < anim.track_get_key_count(tr_frame):
+		key_next_frame_time = anim.track_get_key_time(tr_frame, key_next_frame_id)
+		var key_next_frame_anim_id: int = anim.track_find_key(tr_anim, key_next_frame_time)
+		var key_next_frame_frames_id: int = -1
+		if !do_ignore_frames: key_next_frame_frames_id = anim.track_find_key(tr_frames, key_next_frame_time)
 		
-		var key_nextframe_anim :String= anim.track_get_key_value(tr_anim, key_nextframe_anim_id)
-		if key_nextframe_anim != anim_animation:
-			anim.track_insert_key(tr_anim, key_nextframe_time, key_nextframe_anim)
+		var key_next_frame_anim: String = anim.track_get_key_value(tr_anim, key_next_frame_anim_id)
+		if key_next_frame_anim != anim_animation:
+			anim.track_insert_key(tr_anim, key_next_frame_time, key_next_frame_anim)
+		if !do_ignore_frames:
+			var key_next_frame_frames: SpriteFrames = anim.track_get_key_value(tr_frames, key_next_frame_frames_id)
+			if key_next_frame_frames != currentFrames:
+				anim.track_insert_key(tr_frames, key_next_frame_time, key_next_frame_frames)
 	
-	
-	if key_anim == '':
-		anim.track_insert_key(tr_anim, 0.0, anim_animation)
-	elif key_anim != anim_animation:
+	if key_anim != anim_animation:
 		anim.track_insert_key(tr_anim, current_time, anim_animation)
-		
+	if !do_ignore_frames and key_frames != anim_animSprite.frames:
+		anim.track_insert_key(tr_frames, current_time, currentFrames)
+	
 	anim.track_insert_key(tr_frame, current_time, frame_id)
 
 func _on_scene_changed(scene_root :Node):
