@@ -1,17 +1,17 @@
 tool
 extends MenuButton
 
-const TEX_IconExpand :StreamTexture= preload("res://addons/animation_frame_picker/assets/icons/icon_expand.png")
+const TEX_IconExpand: StreamTexture = preload("res://addons/animation_frame_picker/assets/icons/icon_expand.png")
 
-var last_index :int= -1
+var last_index: int = -1
 
 export var msg_no_selection = ""
-export var owner_reference :String= 'anim_'
-export var node_type :String= 'Node'
+export var owner_reference: String = 'anim_'
+export var node_type: String = 'Node'
 
 var editedSceneRoot
 
-var popup :PopupMenu
+var popup: PopupMenu
 
 func _ready() -> void:
 	popup = get_popup()
@@ -65,13 +65,12 @@ func _on_FramePicker_updated_reference(reference):
 		text = msg_no_selection
 		icon = TEX_IconExpand
 		owner.fix_warning('lacking_nodes')
-#	elif owner.get(owner_reference).owner != get_tree().edited_scene_root:
-#		if owner.get(owner_reference) == get_tree().edited_scene_root:
-#			return
-#		text = msg_no_selection
-#		icon = TEX_IconExpand
-#		owner.fix_warning('lacking_nodes')
-#		pass
+	elif owner.get(owner_reference).owner != get_tree().edited_scene_root:
+		if owner.get(owner_reference) == get_tree().edited_scene_root:
+			return
+		text = msg_no_selection
+		icon = TEX_IconExpand
+		owner.fix_warning('lacking_nodes')
 	else:
 		owner.fix_warning("animsprite_empty")
 		owner.fix_warning('lacking_nodes')

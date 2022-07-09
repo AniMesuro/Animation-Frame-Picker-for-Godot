@@ -17,6 +17,7 @@ var anim: Animation
 onready var framesContainer: GridContainer = $VBox/FramesHBox/ScrollContainer/FramesContainer
 
 func _ready() -> void:
+	add_to_group("plugin animation_frame_picker")
 	pluginInstance = _get_pluginInstance()
 	
 	# If being edited.
@@ -32,9 +33,28 @@ func _ready() -> void:
 
 func get_relevant_children() -> Array:
 	var editedSceneRoot = get_tree().edited_scene_root
-	if !is_instance_valid(editedSceneRoot):
-		return []
-		
+#	if !is_instance_valid(editedSceneRoot):
+#		return []
+#	var _edited_scene_nodes :Array= [editedSceneRoot]
+	
+	#For each child and its 5 children layers, reference itself to the edited_scene_tree Array
+#	for child in editedSceneRoot.get_children():
+#		edited_scene_tree.append(child)
+#
+#		for child_a in child.get_children():
+#			edited_scene_tree.append(child_a)
+#
+#			for child_b in child_a.get_children():
+#				edited_scene_tree.append(child_b)
+#
+#				for child_c in child_b.get_children():
+#					edited_scene_tree.append(child_c)
+#
+#					for child_d in child_c.get_children():
+#						edited_scene_tree.append(child_d)
+#
+#						for child_e in child_d.get_children():
+#							edited_scene_tree.append(child_e)
 	_select_children_as_array(editedSceneRoot, true, 300)
 	return _edited_scene_nodes
 
@@ -52,7 +72,6 @@ func _select_children_as_array(parent: Node, is_root: bool = false, max_iters: i
 		
 		_edited_scene_nodes.append(child)
 		_select_children_as_array(child)
-
 
 func _on_frame_selected(frame_id :int):
 	if !is_instance_valid(pluginInstance):
@@ -184,6 +203,22 @@ func _set_anim_animation(new_animation :String):
 	
 	if !anim_animSprite.frames.is_connected("changed", self, "_on_anim_spriteFrames_changed"):
 		anim_animSprite.frames.connect("changed", self, "_on_anim_spriteFrames_changed")
+
+func force_deselect_animPlayer():
+	anim_animPlayer = null
+	var animPlayerButton: Button = $"VBox/AnimPlayerHBox/Button"
+	animPlayerButton.is_forced_animationPlayer = true
+	emit_signal("updated_reference", "anim_animPlayer")
+
+func force_select_animPlayer(new_anim_animPlayer: AnimationPlayer, animPlayer_name: String, animPlayer_icon: StreamTexture = null):
+	anim_animPlayer = new_anim_animPlayer
+	var animPlayerButton: Button = $"VBox/AnimPlayerHBox/Button"
+	animPlayerButton.text = animPlayer_name
+	animPlayerButton.hint_tooltip = animPlayer_name
+	animPlayerButton.is_forced_animationPlayer = true
+	if is_instance_valid(animPlayer_icon):
+		animPlayerButton.icon = animPlayer_icon
+	
 
 func _set_anim_animPlayer(new_anim_animPlayer: AnimationPlayer):
 	anim_animPlayer = new_anim_animPlayer

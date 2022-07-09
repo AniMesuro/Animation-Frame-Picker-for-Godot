@@ -90,10 +90,9 @@ func _on_FramePicker_updated_reference(reference):
 		icon = TEX_IconExpand
 		_clear_frames()
 	else:
-		if reference == 'anim_animSprite':
-			# is animspr is same
-			owner.anim_spriteFrames = null
-			owner.anim_animation = ""
+#		if reference == 'anim_animSprite':
+#			owner.anim_spriteFrames = null
+#			owner.anim_animation = ""
 		if !is_instance_valid(owner.anim_animSprite.frames):
 			owner.issue_warning("animsprite_empty")
 			owner.anim_animation = ""
