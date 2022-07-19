@@ -1,26 +1,57 @@
 tool
 extends MenuButton
 
-const TEX_IconExpand :StreamTexture= preload("res://addons/animation_frame_picker/assets/icons/icon_expand.png")
+signal left_mouse_pressed
+signal right_mouse_pressed
 
-var last_index :int= -1
+const TEX_IconExpand: StreamTexture = preload("res://addons/animation_frame_picker/assets/icons/icon_expand.png")
+
+var last_index: int = -1
 
 export var msg_no_selection = ""
-export var owner_reference :String= 'anim_'
-export var node_type :String= 'Node'
+export var owner_reference: String = 'anim_'
+export var node_type: String = 'Node'
 
 var editedSceneRoot
 
-var popup :PopupMenu
+var popup: PopupMenu
 
 func _ready() -> void:
 	popup = get_popup()
-	connect('pressed', self, '_on_Button_pressed')
+#	connect('pressed', self, '_on_pressed')
+	connect("gui_input", self, "_on_gui_input")
+	connect("left_mouse_pressed", self, "_on_left_mouse_pressed")
+	connect("right_mouse_pressed", self, "_on_right_mouse_pressed")
+	
 	popup.connect('id_pressed', self, '_on_PopupMenu_item_selected')#, [button.selected])
 	owner.connect('updated_reference', self, '_on_FramePicker_updated_reference')
 	text = msg_no_selection
 
-func _on_Button_pressed() -> void:
+func _on_gui_input(event: InputEvent):
+	if !event is InputEventMouseButton or !event.pressed:
+		return
+	var ev: InputEventMouseButton = event
+	match ev.button_index:
+		BUTTON_LEFT:
+			emit_signal("left_mouse_pressed")
+		BUTTON_RIGHT:
+			emit_signal("right_mouse_pressed")
+			
+# Selects last node on selection with chosen class.
+func _on_right_mouse_pressed():
+	var editorSelection: EditorSelection = owner.pluginInstance.get_editor_interface().get_selection()
+	var nodeList: Array = editorSelection.get_selected_nodes()
+	for n in nodeList:
+		var node: Node = n
+		if node.is_class(node_type):
+			editedSceneRoot = get_tree().edited_scene_root
+			
+			select_node(editedSceneRoot.get_path_to(node))
+			owner.emit_signal("updated_reference", owner_reference)
+			return   
+
+# Generate list of valid nodes.
+func _on_left_mouse_pressed() -> void:
 	editedSceneRoot = get_tree().edited_scene_root
 	if !is_instance_valid(editedSceneRoot):
 		owner.issue_warning("edited_scene_invalid")
@@ -46,19 +77,22 @@ func _on_Button_pressed() -> void:
 func _on_PopupMenu_item_selected(id :int):
 	last_index = id
 	var item_name :String= popup.get_item_text(id)
-	text = item_name
+	select_node(item_name)
+
+func select_node(nodepath: String, new_text: String= ''):
+	if new_text == '':
+		new_text = nodepath.split('/', false)[-1] # node name
+	text = new_text
 	hint_tooltip = text
 	
-	if !is_instance_valid(owner.pluginInstance):
-		owner.pluginInstance = owner._get_pluginInstance()
-	
 	icon = owner.pluginInstance.get_editor_interface().get_inspector().get_icon(node_type, "EditorIcons")
-	if item_name != './'+editedSceneRoot.name:
-		owner.set(owner_reference, editedSceneRoot.get_node(item_name))
+	if nodepath != './'+editedSceneRoot.name:
+		owner.set(owner_reference, editedSceneRoot.get_node(nodepath))
 	else:
 		owner.set(owner_reference, editedSceneRoot)
 		
 	owner.emit_signal("updated_reference", owner_reference)
+	
 
 func _on_FramePicker_updated_reference(reference):
 	if !is_instance_valid(owner.get(owner_reference)):

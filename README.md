@@ -12,19 +12,22 @@ allowing for more efficient keyframing on an animation track.
   - [Frame Picker](#frame-picker)
   - [Tool in use](#tool-in-use)
 - [Videos](#videos)
+- [Integrations](#integrations)
+  - [Posepal](#posepal)
 - [Disclaimer](#disclaimer)
 - [Bug Report](#bug-report)
 
 # Usage
 The plugin adds a "Frame Picker" control to the second Upper Left Dock.
+The Frame Picker requires 2 nodes in the tree: AnimationPlayer and AnimatedSprite.
 
-1. The Frame Picker requires 2 nodes in the tree: AnimationPlayer and AnimatedSprite.
-2. Select an animation from AnimatedSprite's SpriteFrames (This should display the frames on the animation)
-3. Open the "Animation" tab in the Bottom Panel
-4. Select at the scene tree the same AnimationPlayer from the Frame Picker.
-5. Select the animation on the track editor.
-6. Done! Move the Timeline cursor to the desired time and press the desired frame on the FramePicker. This will keyframe at the selected time.
+1. Select an AnimatedSprite. (You can also select the selected one by right clicking)
+2. Select an Animation. 
+3. Select the AnimationPlayer (This should select the AnimationPlayer in Editor automatically)
+4. Select the Animation from AnimationPlayer on the track editor.
+5. Done! Move the Timeline cursor to the desired time and press the desired frame on the FramePicker. This will keyframe at the selected time.
 
+> If you want to preview how a frame would look in a scene, right clicking the preview will apply it without keying.
 # Screenshots
 
 ## Frame Picker
@@ -37,6 +40,13 @@ The plugin adds a "Frame Picker" control to the second Upper Left Dock.
 
 [![Demo](http://i3.ytimg.com/vi/CtEqO24e708/maxresdefault.jpg)](https://www.youtube.com/watch?v=CtEqO24e708)
 </p>Video Demo of Frame Picker add-on in use on a Godot project.
+
+# Integrations
+
+## Posepal
+
+Frame Picker supports Posepal if the two versions are compatible.</p>
+When editing a pose, the PoseAnimationPlayer will be selected at the Frame Picker dock, allowing the frame palette to help keying frame data for the pose. 
 
 # Disclaimer
 It's advisable you configure the SpriteFrames BEFORE keyframing using the Frame Picker. Any frame you remove from SpriteFrames could make a frame key on the animation track invalid (frame > frame_count)

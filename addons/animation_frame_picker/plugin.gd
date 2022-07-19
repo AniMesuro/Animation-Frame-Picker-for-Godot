@@ -14,12 +14,14 @@ var group_plugin :String= "plugin animation_frame_picker"
 
 const SCN_FramePicker: PackedScene = preload("res://addons/animation_frame_picker/dock/FramePicker.tscn")
 
+var settings: Resource
+
 # Editor References
 var animationPlayerEditor :Node
 var animationPlayerEditor_CurrentTime_LineEdit :LineEdit
 var animationPlayerEditor_CurrentAnimation_OptionButton :OptionButton
 
-var framePicker :Control
+var framePicker: Control
 func _enter_tree() -> void:
 	add_to_group(group_plugin)
 	
@@ -28,8 +30,13 @@ func _enter_tree() -> void:
 	
 	for orphanDock in get_tree().get_nodes_in_group("_plugindock frame picker"):
 		remove_control_from_docks(orphanDock)
+	settings = load("res://addons/animation_frame_picker/settings.tres")
+	settings.pluginInstance = self
+	
 	framePicker = SCN_FramePicker.instance()
 	add_control_to_dock(DOCK_SLOT_LEFT_BR, framePicker)
+	settings.dock = framePicker
+
 
 func _exit_tree() -> void:
 	for dock in get_tree().get_nodes_in_group("_plugindock frame picker"):
