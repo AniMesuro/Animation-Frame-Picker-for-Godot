@@ -66,7 +66,9 @@ func _select_children_as_array(parent: Node, is_root: bool = false, max_iters: i
 	if is_root:
 		_edited_scene_nodes = []
 		_select_children_as_array_iter = max_iters
-		
+	if !is_instance_valid(parent):
+		return
+	
 	for child in parent.get_children():
 		if _select_children_as_array_iter == 0:
 			return
