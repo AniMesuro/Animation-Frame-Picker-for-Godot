@@ -90,21 +90,23 @@ func _on_FramePicker_updated_reference(reference):
 		icon = TEX_IconExpand
 		_clear_frames()
 	else:
-#		if reference == 'anim_animSprite':
-#			owner.anim_spriteFrames = null
-#			owner.anim_animation = ""
+		if reference == 'anim_animSprite':
+			if owner.last_animSprite != owner.anim_animSprite:
+				_deselect_animation()
+				_clear_frames()
 		if !is_instance_valid(owner.anim_animSprite.frames):
 			owner.issue_warning("animsprite_empty")
-			owner.anim_animation = ""
-			text = msg_no_selection
-			icon = TEX_IconExpand
+			_deselect_animation()
 			_clear_frames()
 		elif !owner.anim_animSprite.frames.has_animation(owner.anim_animation):
 			owner.fix_warning("animsprite_empty")
-			owner.anim_animation = ""
-			text = msg_no_selection
-			icon = TEX_IconExpand
+			_deselect_animation()
 			_clear_frames()
+
+func _deselect_animation():
+	owner.anim_animation = ""
+	text = msg_no_selection
+	icon = TEX_IconExpand
 
 func fill_frames():	
 	_clear_frames()
