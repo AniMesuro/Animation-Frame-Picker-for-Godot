@@ -1,0 +1,10 @@
+[gd_resource type="Resource" load_steps=2 format=2]
+
+[ext_resource path="res://addons/animation_frame_picker/misc/FramePickerSettings.gd" type="Script" id=1]
+
+[resource]
+script = ExtResource( 1 )
+enable_addons_integration = true
+integrations = {
+"posepal": true
+}
